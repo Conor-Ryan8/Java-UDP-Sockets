@@ -1,3 +1,9 @@
+/*******************************************************************************
+ * Conor Ryan - Socket Programming - Java				       *
+ * Basic UDP Server							       *
+ * April 2018			       				               *
+ *******************************************************************************/
+
 package sockets;
 
 import java.net.DatagramPacket;
