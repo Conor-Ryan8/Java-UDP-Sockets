@@ -1,11 +1,14 @@
-/*******************************************************************************
- * Conor Ryan - Socket Programming - Java				       *
- * Basic UDP Client							       *
- * April 2018			       				               *
- *******************************************************************************/
+/*********************************************
+ * Conor Ryan - Socket Programming - Java    *
+ * Basic UDP Client                          *
+ * April 2018                                *
+ *********************************************/
 
-package sockets;
+package testtest;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -14,27 +17,51 @@ public class Client {
 	
 	public static void main(String[] args) throws Exception
 	{
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		DatagramSocket socket = new DatagramSocket();
+		String temp = null;
+		byte[] data = null;
+		int port = 0;
+		InetAddress address = null;
 		
-		DatagramSocket sock = new DatagramSocket();
-
-		//Create something to be sent to the socket
-		String data = "Test Message 1";
-		
-		//Convert the "data" to a byte array to be sent to the socket
-		byte[] bytes = data.getBytes();
-
-		//Set/find IP address of the server
-		InetAddress address = InetAddress.getLocalHost();
+	    System.out.print("Please enter IP Address: ");
+	  	try 
+	    {
+	    	temp = reader.readLine();
+			address = InetAddress.getByName(temp);
+		} 
+	    catch (IOException e) 
+	    {
+	        e.printStackTrace();
+	    }
+	  	System.out.print("Please enter port: ");
+    	try 
+    	{
+        	temp = reader.readLine();
+        	port = Integer.parseInt(temp);
+    	} 
+    	catch (IOException e) 
+    	{
+    		e.printStackTrace();
+    	}
+		System.out.print("Please enter message: ");
+	  	try 
+	    {
+	    	temp = reader.readLine();
+	    	data = temp.getBytes();
+		} 
+	    catch (IOException e) 
+	    {
+	        e.printStackTrace();
+	    }
 		
 		//Create new packet "datapacket" for sending data to the socket and pass it connection information and byte array to be sent
-		DatagramPacket datapacket = new DatagramPacket(bytes,bytes.length,address,9999);
+		DatagramPacket packet = new DatagramPacket(data,data.length,address,port);
 		
 		//Send the packet to the socket
-		sock.send(datapacket);
+		socket.send(packet);
 		
 		//Close the socket
-		sock.close();
-
+		socket.close();
 	}
-
 }
